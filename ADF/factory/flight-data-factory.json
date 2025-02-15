@@ -1,0 +1,9 @@
+{
+	"name": "flight-data-factory",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "137b5cd6-569c-4ba7-b3ba-48a260f876ba",
+		"tenantId": "9c23741f-5aa0-4a74-b367-2592a76ceb81"
+	}
+}

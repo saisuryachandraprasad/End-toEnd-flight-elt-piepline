@@ -1,0 +1,108 @@
+{
+	"name": "api_pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Web_api",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": true,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "GET",
+					"url": "https://flightvault.vault.azure.net/secrets/api-key/6888bdf1b95e44688322c3ed3d09e403?api-version=7.5",
+					"authentication": {
+						"type": "MSI",
+						"resource": "https://vault.azure.net"
+					}
+				}
+			},
+			{
+				"name": "Copy_api_data",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Web_api",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET"
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['response']"
+								},
+								"sink": {
+									"path": "$['response']"
+								}
+							}
+						],
+						"collectionReference": ""
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "RestResource_source",
+						"type": "DatasetReference",
+						"parameters": {
+							"url": {
+								"value": "@activity('Web_api').output",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Json_data_source",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": {
+								"value": "@concat('airlines','/Date_Part = ',\nformatDateTime(utcNow(),'yyyy-MM-dd'),'/airlines.json')",
+								"type": "Expression"
+							},
+							"container": "raw"
+						}
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-02-15T06:40:35Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
