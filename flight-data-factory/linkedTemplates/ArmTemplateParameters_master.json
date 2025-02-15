@@ -1,0 +1,48 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "flight-data-factory"
+		},
+		"AzureDataLakeStoragesink_properties_typeProperties_url": {
+			"value": "https://flightetladlsdev.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStoragesink_properties_typeProperties_tenant": {
+			"value": "9c23741f-5aa0-4a74-b367-2592a76ceb81"
+		},
+		"AzureDataLakeStoragesink_properties_typeProperties_servicePrincipalId": {
+			"value": "dc325315-c51e-4b5e-80f9-38e7d65b70ee"
+		},
+		"AzureDataLakeStoragesource_properties_typeProperties_url": {
+			"value": "https://flightetladlssource.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStoragesource_properties_typeProperties_tenant": {
+			"value": "9c23741f-5aa0-4a74-b367-2592a76ceb81"
+		},
+		"AzureDataLakeStoragesource_properties_typeProperties_servicePrincipalId": {
+			"value": "dc325315-c51e-4b5e-80f9-38e7d65b70ee"
+		},
+		"AzureKeyVault_properties_typeProperties_baseUrl": {
+			"value": "https://flightvault.vault.azure.net/"
+		},
+		"AzureSqlDatabasesource_properties_typeProperties_server": {
+			"value": "flightetl.database.windows.net"
+		},
+		"AzureSqlDatabasesource_properties_typeProperties_database": {
+			"value": "flightetl"
+		},
+		"AzureSqlDatabasesource_properties_typeProperties_userName": {
+			"value": "flight_admin"
+		},
+		"RestService_source_properties_typeProperties_url": {
+			"value": "https://airlabs.co/api/v9/airlines"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
